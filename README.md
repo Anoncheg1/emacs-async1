@@ -43,7 +43,7 @@ If your package is available on MELPA, add this to your init file:
 If installing from a GitHub repo (not yet in MELPA), specify the source:
 ```elisp
 (use-package async1
-  :straight (async1 :host github :repo "yourusername/async1"))
+  :straight (async1 :host github :repo "Anoncheg1/emacs-async1"))
 ;; Requires straight.el. See below.
 ```
 
@@ -52,7 +52,7 @@ Add to your init file, replacing `yourusername` with your GitHub username:
 
 ```elisp
 (straight-use-package
- '(async1 :host github :repo "yourusername/async1"))
+ '(async1 :host github :repo "Anoncheg1/emacs-async1"))
 ```
 
 Or with [Quelpa](https://github.com/quelpa/quelpa):
