@@ -2,7 +2,7 @@
 
 **async1** is an Emacs Lisp package for building pipelines of asynchronous functions, supporting both sequential and parallel execution patterns. It provides a simple interface to compose async chains of callbacks, with customizable result aggregation for parallel steps.
 
-## Usage 1
+## Usage
 **1. Sequential and parallel steps**
 ```elisp
 (async1-start nil
@@ -81,6 +81,8 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 (quelpa '(async1 :repo "Anoncheg1/emacs-async1" :fetcher github))
 ```
 
+## Usage examples
+
 **2. Mixing custom async functions**
 ```elisp
 (defun custom-async-step (data callback)
@@ -109,8 +111,7 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 ;; Output: "Final result: Step 1 -> Parallel B & Step 1 -> Parallel A"
 ```
 
-## Advanced Examples
-**Using external data defined with lambdas**
+**4. Using external data defined with lambdas**
 ```elisp
 (let* ((var "myvar")
        (stepcallback)
@@ -125,7 +126,7 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 ;; Output: "Final result:  -> Step1 -> myvar -> Step1 -> myvar -> Step1 -> myvar"
 ```
 
-**Mutable lambdas**
+**5. Mutable lambdas**
 ```elisp
 (let* ((call (lambda (step)
                (lambda (data callback)
