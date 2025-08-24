@@ -1,12 +1,33 @@
 # async1
 
 **async1** is an Emacs Lisp package for building pipelines of asynchronous functions, supporting both sequential and parallel execution patterns. It provides a simple interface to compose async chains of callbacks, with customizable result aggregation for parallel steps.
+
+## Usage 1
+**1. Sequential and parallel steps**
+```elisp
+(async1-start nil
+  '((:result "Step 1" :delay 1)
+    (:parallel
+     (:result "Parallel A" :delay 2)
+     (
+      (:result "Sub-seq a" :delay 1)
+      (:result "Sub-seq b" :delay 1)
+      custom-async-step ;; or your function like this
+     )
+     (:result "Parallel B" :delay 2))
+    (:result "Step 3" :delay -1)))
+```
+Here ```(:result "Step 1" :delay 1)``` entities is just examples of ```(lambda (text callback))``` that output text and run callback with delay.
+
+Define and run an async pipeline with `async1-start`. Each step must be a record or function with `(data callback)` signature.
+
 ## Features
-- **Async pipelines**: Compose and run complex chains of async steps.
-- **Parallel and sequential steps**: Easily specify workflow structure.
-- **Custom callbacks**: Use your own functions in the pipeline.
-- **Custom aggregators**: Control how parallel results are combined.
-- **Flexible data handling**: Pass data between steps and access external data.
+- **Deep chain trees**
+- **Parallel and sequential steps**
+- **Custom async steps**: Use your own functions that should take `(data callback)`, where callback is the next step function that should be called.
+- **Custom aggregator**: Control how parallel results are combined. Redefine `async-default-aggregator` or pass your own function with `:aggregator` in parallel lists.
+- **Custom final callback**: function that receive only data to do something with result.
+- **External data handling**: Lambdas can capture variables.
 
 ## Configuration
 ```elisp
@@ -60,23 +81,6 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 (quelpa '(async1 :repo "Anoncheg1/emacs-async1" :fetcher github))
 ```
 
-
-## Usage
-Define and run an async pipeline with `async1-start`. Each step must be a record or function with `(data callback)` signature.
-**1. Sequential and parallel steps**
-```elisp
-(async1-start nil
-  '((:result "Step 1" :delay 1)
-    (:parallel
-     (:result "Parallel A" :delay 2)
-     (
-      (:result "Sub-seq a" :delay 1)
-      (:result "Sub-seq b" :delay 1)
-     )
-     (:result "Parallel B" :delay 2))
-    (:result "Step 3" :delay -1)))
-```
-
 **2. Mixing custom async functions**
 ```elisp
 (defun custom-async-step (data callback)
@@ -104,12 +108,6 @@ Define and run an async pipeline with `async1-start`. Each step must be a record
      :aggregator #'custom-aggregator)))
 ;; Output: "Final result: Step 1 -> Parallel B & Step 1 -> Parallel A"
 ```
-
-## Customization features
-- **Custom async steps**: Each pipeline function should take `(data callback)`.
-- **Custom aggregator**: Redefine `async-default-aggregator` or pass your own function with `:aggregator` in parallel lists.
-- **Custom final callback**: function that receive only data to do something with result.
-- **External data handling**: Lambdas can capture variables.
 
 ## Advanced Examples
 **Using external data defined with lambdas**
