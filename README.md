@@ -140,6 +140,8 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 ;; Output: "Final result:  -> Step0 -> Step1 -> Step2 -> Step3"
 ```
 
+Battlefield example: https://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
+
 ## TODO / Roadmap
 - Support multiple aggregators in parallel lists
 - Add `:catch` for error handling

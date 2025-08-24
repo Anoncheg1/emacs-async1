@@ -114,6 +114,8 @@
 ;;                            (funcall call 3))))
 ;; Output:  "Final result:  -> Step0 -> Step1 -> Step2 -> Step3"
 
+;; Battlefield example: ehttps://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
+
 ;; TODO: make :aggregator to be able to set many of them. (or it is not necessary?)
 ;; TODO: add :catch for error handling. (or it is not necessory?)
 
