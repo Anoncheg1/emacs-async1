@@ -28,7 +28,7 @@ jobs:
         env:
           LOCAL_REPO: ${{ github.workspace }}
           # RECIPE is your recipe as written for MELPA:
-          RECIPE: (russian-calendar :fetcher github :repo "Anoncheg1/emacs-async1")
+          RECIPE: (async1 :fetcher github :repo "Anoncheg1/emacs-async1")
           # set this to false (or remove it) if the package isn't on MELPA:
           # EXIST_OK: false
         run: |
