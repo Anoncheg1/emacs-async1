@@ -178,7 +178,6 @@ Used for :aggregator."
     ;; else
     nil))
 
-
 (defun async1--handle-parallel-step (specs data chain-step current-index)
   "Execute parallel SPECS with DATA, aggregate results with AGGREGATOR, and call CHAIN-STEP with CURRENT-INDEX."
   (let* ((aggregator (async1-plist-get specs :aggregator))
@@ -228,8 +227,7 @@ Returns result of the first function in the chain."
                 (if final-callback
                     (funcall final-callback data)
                   ;; else
-                  (print (format "Final result: %s" data))
-                )))))
+                  (print (format "Final result: %s" data)))))))
     (funcall chain-step initial-data 0)))
 
 
