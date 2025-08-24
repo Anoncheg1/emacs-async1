@@ -3,7 +3,7 @@
 ;; SPDX-License-Identifier: AGPL-3.0-or-later
 ;; Author: github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; Keywords: tools, async, callback
-;; URL: https://github.com/Anoncheg1/emacs-async1
+;; URL: https://github.com/Anoncheg1/async1
 
 ;;; License
 
@@ -262,22 +262,22 @@ Argument ORIG-PRINT `print' function."
 ;;     (should (string= (car result) "input -> Custom Step"))
 ;;     (should (= (cdr result) 1))))
 
-(ert-deftest test-start-async-chain-sequential ()
-  "Test `start-async-chain' with sequential steps."
+(ert-deftest test-async1-start-sequential ()
+  "Test `async1-start' with sequential steps."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain nil
+  (async1-start nil
                      '((:result "Step1" :delay 0.4)
                        (:result "Step2" :delay 0.4)))
   (wait-for-async 1)
   (should (string= (car (car test-print-output)) "Final result: Step1 -> Step2"))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-parallel ()
-  "Test `start-async-chain' with parallel steps."
+(ert-deftest test-async1-start-parallel ()
+  "Test `async1-start' with parallel steps."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain nil
+  (async1-start nil
                      '((:parallel (:result "A" :delay 0.5) (:result "B" :delay 0.5))))
   (wait-for-async 1)
   (let ((result (car (car test-print-output))))
@@ -285,11 +285,11 @@ Argument ORIG-PRINT `print' function."
                 (string= result "Final result: {B, A}"))))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-mixed ()
-  "Test `start-async-chain' with mixed sequential and parallel steps."
+(ert-deftest test-async1-start-mixed ()
+  "Test `async1-start' with mixed sequential and parallel steps."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain nil
+  (async1-start nil
                      '((:result "Step1" :delay 0.5)
                        (:parallel (:result "A" :delay 0.5) (:result "B" :delay 0.5))
                        (:result "Step3" :delay 0.5)))
@@ -299,10 +299,10 @@ Argument ORIG-PRINT `print' function."
                 (string= result "Final result: {Step1 -> A, Step1 -> B} -> Step3"))))
   (advice-remove 'print #'test-capture-print))
 
-;; (ert-deftest test-start-async-chain-custom-function-aggregator ()
-;;   "Test start-async-chain with custom function and aggregator."
+;; (ert-deftest test-async1-start-custom-function-aggregator ()
+;;   "Test async1-start with custom function and aggregator."
 ;;   (reset-test-state)
-;;   (start-async-chain nil
+;;   (async1-start nil
 ;;                      '((:result "Step1" :delay 0.5)
 ;;                        (:parallel custom-async-step (:result "B" :delay 0.5)))
 ;;                      'custom-aggregator)
@@ -310,29 +310,29 @@ Argument ORIG-PRINT `print' function."
 ;;     (should (or (string= result "Final result:  -> Step1 ->  -> Custom Step & B")
 ;;                 (string= result "Final result:  -> Step1 -> B &  -> Custom Step")))))
 
-(ert-deftest test-start-async-chain-empty-sequence ()
-  "Test `start-async-chain' with empty sequence."
+(ert-deftest test-async1-start-empty-sequence ()
+  "Test `async1-start' with empty sequence."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain "test" '())
+  (async1-start "test" '())
   (wait-for-async 0.5)
   (should (string= (car (car test-print-output)) "Final result: test"))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-invalid-spec ()
-  "Test `start-async-chain' with invalid plist spec."
+(ert-deftest test-async1-start-invalid-spec ()
+  "Test `async1-start' with invalid plist spec."
   (reset-test-state)
   (let ((debug-on-error nil))
     (should-error
      (progn
-       (start-async-chain nil '((:invalid-key "value") (:delay 0.5)))
+       (async1-start nil '((:invalid-key "value") (:delay 0.5)))
        (wait-for-async 2)))))
 
-(ert-deftest test-start-async-chain-zero-delay-parallel ()
-  "Test `start-async-chain' with zero delay in parallel steps."
+(ert-deftest test-async1-start-zero-delay-parallel ()
+  "Test `async1-start' with zero delay in parallel steps."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain nil
+  (async1-start nil
                      '((:parallel (:result "A" :delay 0) (:result "B" :delay 0))))
   (wait-for-async 0.5)
   (let ((result (car (car test-print-output))))
@@ -340,23 +340,23 @@ Argument ORIG-PRINT `print' function."
                 (string= result "Final result: {B, A}"))))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-large-parallel ()
-  "Test `start-async-chain' with large number of parallel steps."
+(ert-deftest test-async1-start-large-parallel ()
+  "Test `async1-start' with large number of parallel steps."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
   (let ((specs (mapcar (lambda (i) `(:result ,(format "A%d" i) :delay 0.5))
                        (number-sequence 1 5)))) ; ((:result "A1" :delay 0.5) (:result "A2" :delay 0.5) (:result "A3" :delay 0.5) (:result "A4" :delay 0.5) (:result "A5" :delay 0.5))
-    (start-async-chain nil `((:parallel ,@specs)))
+    (async1-start nil `((:parallel ,@specs)))
     (wait-for-async 1)
     (let ((result (car (car test-print-output))))
       (should (string-match-p "Final result: {A[1-5], A[1-5], A[1-5], A[1-5], A[1-5]}" result))))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-nil-aggregator ()
-  "Test `start-async-chain' with nil aggregator."
+(ert-deftest test-async1-start-nil-aggregator ()
+  "Test `async1-start' with nil aggregator."
   (reset-test-state)
   (advice-add 'print :around #'test-capture-print)
-  (start-async-chain nil
+  (async1-start nil
                      '((:parallel (:result "A" :delay 0.5) (:result "B" :delay 0.5)))
                      nil)
   (wait-for-async 1)
@@ -365,12 +365,12 @@ Argument ORIG-PRINT `print' function."
                 (string= result "Final result: {B, A}"))))
   (advice-remove 'print #'test-capture-print))
 
-(ert-deftest test-start-async-chain-error1 ()
-  "Test `start-async-chain' with nil aggregator."
+(ert-deftest test-async1-start-error1 ()
+  "Test `async1-start' with nil aggregator."
   (reset-test-state)
   (should-error
    (progn
-     (start-async-chain nil
+     (async1-start nil
                         '((:result nil :delay 0.5)))
      (wait-for-async 1) )))
 

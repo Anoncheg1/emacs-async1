@@ -29,7 +29,7 @@
 ;;; Commentary:
 
 ;; Usage:
-;; You define and run pipeline with `start-async-chain'.
+;; You define and run pipeline with `async1-start'.
 ;; You may call own function defined with (data callback) parameters.
 ;; You   may   redefine    `async-default-aggregator'   for   parallel
 ;; calls.  There may be only one aggregator for now.
@@ -45,7 +45,7 @@
 
 ;; Examples of usage:
 ;; 1. Sequential and parallel steps with default template
-;; (start-async-chain nil
+;; (async1-start nil
 ;;  '((:result "Step 1" :delay 1)
 ;;    (:parallel
 ;;     (:result "Parallel A" :delay 2)
@@ -64,7 +64,7 @@
 ;;   (run-at-time 1.5 nil callback
 ;;                (concat data " -> Custom Step")))
 
-;; (start-async-chain nil
+;; (async1-start nil
 ;;  '((:result "Step 1" :delay 1)
 ;;    (:parallel
 ;;     custom-async-step
@@ -76,7 +76,7 @@
 ;;   "Custom aggregator that joins results with ' & '."
 ;;   (mapconcat 'identity results " & "))
 
-;; (start-async-chain nil
+;; (async1-start nil
 ;;  '((:result "Step 1" :delay 1)
 ;;    (:parallel
 ;;     (:result "Parallel A" :delay 1)
@@ -95,7 +95,7 @@
 ;;                (run-at-time 0 nil callback1
 ;;                                                   (concat data " -> " "Step1"))))
 ;;        )
-;;   (start-async-chain nil
+;;   (async1-start nil
 ;;                      (list call
 ;;                            call
 ;;                            call
@@ -108,7 +108,7 @@
 ;;                  (run-at-time 0 nil callback
 ;;                               (concat data " -> " "Step" (number-to-string step)))))
 ;;              ))
-;;   (start-async-chain nil
+;;   (async1-start nil
 ;;                      (list (funcall call 0)
 ;;                            (funcall call 1)
 ;;                            (funcall call 2)
@@ -143,7 +143,7 @@ SPEC is either a function that accepts (data, callback), a plist with
    ((and (listp spec) (not (eq (car spec) :parallel)) (listp (car spec)))
     ;; Treat as a sequential sub-chain
     (lambda (data callback)
-      (start-async-chain data spec callback)))
+      (async1-start data spec callback)))
    (t
     ;; Handle plist
     (let ((result (or (plist-get spec :result) "Result"))
@@ -232,8 +232,6 @@ Returns result of the first function in the chain."
                 )))))
     (funcall chain-step initial-data 0)))
 
-;;;###autoload
-(defalias 'start-async-chain #'async1-start)
 
 ;;; provide
 (provide 'async1)
