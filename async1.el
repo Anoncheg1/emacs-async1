@@ -1,4 +1,4 @@
-;;; async1.el --- Async chains of parallel and sequencial callbacks. -*- lexical-binding: t -*-
+;;; async1.el --- Async chains of parallel and sequencial callbacks -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2025 github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; SPDX-License-Identifier: AGPL-3.0-or-later
@@ -205,7 +205,8 @@ Call CHAIN-STEP with CURRENT-INDEX."
 
 ;;;###autoload
 (defun async1-start (initial-data sequence &optional final-callback)
-  "Execute a sequence of async functions from SEQUENCE, starting with INITIAL-DATA.
+  "Execute a SEQUENCE of async functions.
+First function receive INITIAL-DATA.
 FINAL-CALLBACK is a function with one parameter - data, without callback.
 Each spec is either:
 1) a function (taking data and callback),
@@ -214,8 +215,10 @@ Each spec is either:
 4) a list of specs for a sequential sub-chain.
 For parallel steps, execute functions concurrently and combine results
 using AGGREGATOR or `async-default-aggregator'.
-Each function in SEQUENCE takes DATA and a CALLBACK, passing results to the next function.
-\(chain-step(data 0) -> (funcall func data callback) -> lambda (result) -> (chain-step(data 1))
+Each function in SEQUENCE takes DATA  and a CALLBACK, passing results to
+the next function.
+\(chain-step(data 0) -> (funcall func  data callback) -> lambda (result)
+-> (chain-step(data 1))
 Returns result of the first function in the chain."
   (letrec ((chain-step
             (lambda (data current-index)

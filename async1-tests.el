@@ -48,14 +48,16 @@ Argument ORIG-PRINT `print' function."
   (apply orig-print args))
 
 (defun wait-for-async (timeout)
-  "Wait up to TIMEOUT seconds for `test-results' to be non-nil, return result."
+  "Wait up to TIMEOUT seconds for `test-results' to be non-nil.
+Return collected `test-results' and set global variable to nil."
   (let ((start-time (float-time)))
     ;; loop - Once `test-results` is non-nil or the `timeout` is reached, the loop exits.
     (while (and (null test-results)
                 (< (- (float-time) start-time) timeout))
       (sit-for 0.1))
     (prog1 test-results
-      ;; After returning the result, we set `test-results` to nil, preparing it for the next asynchronous test.
+      ;; After  returning the  result, we  set `test-results`  to nil,
+      ;; preparing it for the next asynchronous test.
       (setq test-results nil))))
 
 (defun reset-test-state ()
