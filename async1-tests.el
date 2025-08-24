@@ -374,7 +374,7 @@ Return collected `test-results' and set global variable to nil."
    (progn
      (async1-start nil
                         '((:result nil :delay 0.5)))
-     (wait-for-async 1) )))
+     (wait-for-async 1))))
 
 ;;; provide
 (provide 'async1-tests)

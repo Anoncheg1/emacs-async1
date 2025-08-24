@@ -1,4 +1,4 @@
-;;; async1.el --- Async chains of parallel and sequencial callbacks -*- lexical-binding: t -*-
+;;; async1.el --- Unroll async chains of parallel and sequencial callbacks -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2025 github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; SPDX-License-Identifier: AGPL-3.0-or-later
@@ -36,8 +36,7 @@
 ;; :parallel should be at the beginin of list
 ;; :aggregator may be anywhere in parallel list
 
-;; TODO: make :aggregator to be able to set many of them. (or it is not necessary?)
-;; TODO: add :catch for error handling. (or it is not necessory?)
+;; Deep trees should work also.
 
 ;; How this works:
 ;; Each async records-functions wrapped in lambda that call to next record with result.
@@ -115,6 +114,9 @@
 ;;                            (funcall call 3))))
 ;; Output:  "Final result:  -> Step0 -> Step1 -> Step2 -> Step3"
 
+;; TODO: make :aggregator to be able to set many of them. (or it is not necessary?)
+;; TODO: add :catch for error handling. (or it is not necessory?)
+
 ;;; Code:
 
 ;;;###autoload
@@ -129,7 +131,7 @@ Appending RESULT-SUFFIX to DATA after DELAY seconds and call CALLBACK."
 (defun async1-default-aggregator (results)
   "Default aggregator for parallel RESULTS, concatenating them with commas."
   ;; (print "aggregator" results)
-  (let ((r (mapconcat 'identity results ", ")))
+  (let ((r (mapconcat #'identity results ", ")))
     (if (> (length results) 1)
         (concat "{" r "}")
       r)))
