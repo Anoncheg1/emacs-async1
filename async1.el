@@ -5,6 +5,8 @@
 ;; Author: github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; Keywords: tools, async, callback
 ;; URL: https://github.com/Anoncheg1/emacs-async1
+;; Version: 0.1
+;; Package-Requires: ((emacs "24.1"))
 
 ;;; License
 
@@ -202,7 +204,7 @@ Used for :aggregator."
                (funcall chain-step result (1+ current-index))))))
 
 ;;;###autoload
-(defun start-async-chain (initial-data sequence &optional final-callback)
+(defun async1-start (initial-data sequence &optional final-callback)
   "Execute a sequence of async functions from SEQUENCE, starting with INITIAL-DATA.
 FINAL-CALLBACK is a function with one parameter - data, without callback.
 Each spec is either:
@@ -230,8 +232,10 @@ Returns result of the first function in the chain."
                 )))))
     (funcall chain-step initial-data 0)))
 
+;;;###autoload
+(defalias 'start-async-chain #'async1-start)
 
 ;;; provide
 (provide 'async1)
 
-;;; async.el ends here
+;;; async1.el ends here
