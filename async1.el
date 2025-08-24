@@ -179,7 +179,8 @@ Used for :aggregator."
     nil))
 
 (defun async1--handle-parallel-step (specs data chain-step current-index)
-  "Execute parallel SPECS with DATA, aggregate results with AGGREGATOR, and call CHAIN-STEP with CURRENT-INDEX."
+  "Execute parallel SPECS with DATA, aggregate results with AGGREGATOR.
+Call CHAIN-STEP with CURRENT-INDEX."
   (let* ((aggregator (async1-plist-get specs :aggregator))
          (specs (async1-plist-remove specs :aggregator))
          (results '())
@@ -211,7 +212,8 @@ Each spec is either:
 2) a plist with :result and :delay keys,
 3) (:parallel spec1 spec2 ...) for parallel execution,
 4) a list of specs for a sequential sub-chain.
-For parallel steps, execute functions concurrently and combine results using AGGREGATOR or `async-default-aggregator'.
+For parallel steps, execute functions concurrently and combine results
+using AGGREGATOR or `async-default-aggregator'.
 Each function in SEQUENCE takes DATA and a CALLBACK, passing results to the next function.
 \(chain-step(data 0) -> (funcall func data callback) -> lambda (result) -> (chain-step(data 1))
 Returns result of the first function in the chain."
