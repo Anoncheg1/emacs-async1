@@ -55,6 +55,8 @@
 ;;     (:result "Parallel B" :delay 2))
 ;;    (:result "Step 3" :delay -1)))
 
+;; "Final result: {Step 1 -> Sub-seq a -> Sub-seq b, Step 1 -> Parallel B, Step 1 -> Parallel A} -> Step 3"
+
 ;; 2. Mixing custom function and parallel steps
 ;; (defun custom-async-step (data callback)
 ;;   "Custom async function that modifies data differently.
@@ -73,7 +75,7 @@
 ;; 3. With custom aggregator
 ;; (defun custom-aggregator (results)
 ;;   "Custom aggregator that joins results with ' & '."
-;;   (mapconcat 'identity results " & "))
+;;   (concat "{" (mapconcat 'identity results " & ") "}"))
 
 ;; (async1-start nil
 ;;  '((:result "Step 1" :delay 1)
@@ -82,7 +84,7 @@
 ;;     (:result "Parallel B" :delay 2)
 ;;     :aggregator #'custom-aggregator)))
 
-;; Output: "Final result: Step 1 -> Parallel B & Step 1 -> Parallel A"
+;; Output: "Final result: {Step 1 -> Parallel B & Step 1 -> Parallel A}"
 
 ;; 4. Use external data in callback and callback with one argument
 ;; (let* ((var "myvar")

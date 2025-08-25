@@ -6,16 +6,18 @@
 **1. Sequential and parallel steps**
 ```elisp
 (async1-start nil
-  '((:result "Step 1" :delay 1)
-    (:parallel
-     (:result "Parallel A" :delay 2)
-     (
-      (:result "Sub-seq a" :delay 1)
-      (:result "Sub-seq b" :delay 1)
-      custom-async-step ;; or your function like this
-     )
-     (:result "Parallel B" :delay 2))
-    (:result "Step 3" :delay -1)))
+    '((:result "Step 1" :delay 1)
+         (:parallel
+             (:result "Parallel A" :delay 2)
+             (
+                 (:result "Sub-seq a" :delay 1)
+                 (:result "Sub-seq b" :delay 1)
+                 ;; custom-async-step ;; or your function like this
+             )
+             (:result "Parallel B" :delay 2))
+         (:result "Step 3" :delay 1)))
+
+;; Output: "Final result: {Step 1 -> Sub-seq a -> Sub-seq b, Step 1 -> Parallel B, Step 1 -> Parallel A} -> Step 3"
 ```
 Here ```(:result "Step 1" :delay 1)``` entities is just examples of ```(lambda (text callback))``` that output text and run callback with delay.
 
