@@ -19,6 +19,7 @@
 
 ;; Output: "Final result: {Step 1 -> Sub-seq a -> Sub-seq b, Step 1 -> Parallel B, Step 1 -> Parallel A} -> Step 3"
 ```
+
 Here ```(:result "Step 1" :delay 1)``` entities is just examples of ```(lambda (text callback))``` that output text and run callback with delay.
 
 Define and run an async pipeline with `async1-start`. Each step must be a record or function with `(data callback)` signature.
@@ -145,13 +146,18 @@ Or with [Quelpa](https://github.com/quelpa/quelpa):
 Battlefield example: https://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
 
 ## TODO / Roadmap
-- Support multiple aggregators in parallel lists
-- Add `:catch` for error handling
+- Think how `:catch` (error handling) may be useful and implemented.
 
 ## License
 GNU Affero General Public License, version 3 (AGPLv3)
 
+## Other Emacs packages with solution for "callback hell":
+- deferred https://github.com/kiwanami/emacs-deferred/tree/master
+- promise https://github.com/chuntaro/emacs-promise
+- aio https://github.com/skeeto/emacs-aio
+
+
 ## Donate
-You can give me crypto money directly with:
-BTC (Bitcoin) address: 1CcDWSQ2vgqv5LxZuWaHGW52B9fkT5io25
-USDT (Tether) address: TVoXfYMkVYLnQZV3mGZ6GvmumuBfGsZzsN
+You can give me crypto money directly with crypto currencies:
+- BTC (Bitcoin) address: 1CcDWSQ2vgqv5LxZuWaHGW52B9fkT5io25
+- USDT (Tether) address: TVoXfYMkVYLnQZV3mGZ6GvmumuBfGsZzsN

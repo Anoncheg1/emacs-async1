@@ -1,8 +1,8 @@
-;;; async1.el --- Unroll async chains of parallel and sequencial callbacks -*- lexical-binding: t -*-
+;;; async1.el --- Unroll chain of async callbacks, parallel and sequencial. -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2025 github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; SPDX-License-Identifier: AGPL-3.0-or-later
-;; Author: github.com/Anoncheg1,codeberg.org/Anoncheg
+;; Author: <github.com/Anoncheg1,codeberg.org/Anoncheg>
 ;; Keywords: tools, async, callback
 ;; URL: https://github.com/Anoncheg1/emacs-async1
 ;; Version: 0.1
@@ -31,22 +31,19 @@
 
 ;;; Commentary:
 
+;; Why? Most commonly you will meet callbacks at url.el library. When
+;; you request page with (`url-retrieve' url callback) command
+;; immediately return control, page will be passed to callback
+;; function at parameters, so chain of calls created, this chain
+;; called "callback hell" problem.
+
+;; Configuration:
+;; (require 'async1)
+
 ;; Usage:
-;; You define and run pipeline with `async1-start'.
-;; You may call own function defined with (data callback) parameters.
-;; You   may   redefine    `async-default-aggregator'   for   parallel
-;; calls.  There may be only one aggregator for now.
-;; :parallel should be at the beginin of list
-;; :aggregator may be anywhere in parallel list
+;; You define and run pipeline of callbacks with `async1-start' function.
 
-;; Deep trees should work also.
-
-;; How this works:
-;; Each async records-functions wrapped in lambda that call to next record with result.
-;; All lambda functions created as a one lambda and we call it.
-
-;; Examples of usage:
-;; 1. Sequential and parallel steps with default template
+;; Examples 1. Sequential and parallel steps with default template
 ;; (async1-start nil
 ;;  '((:result "Step 1" :delay 1)
 ;;    (:parallel
@@ -59,6 +56,22 @@
 ;;    (:result "Step 3" :delay -1)))
 
 ;; "Final result: {Step 1 -> Sub-seq a -> Sub-seq b, Step 1 -> Parallel B, Step 1 -> Parallel A} -> Step 3"
+
+;; Each async records-functions wrapped in lambda that call to next record with result.
+;; All lambda functions created as a one lambda and we call it.
+
+;; You may call own function defined with (data callback) parameters.
+;; You   may   redefine    `async-default-aggregator'   for   parallel
+;; calls.  There may be only one aggregator for now.
+;; :parallel should be at the beginin of list
+;; :aggregator may be anywhere in parallel list
+
+;; Deep trees should work also.
+
+;;; Other Emacs packages with solution for "callback hell":
+;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master
+;; - promise https://github.com/chuntaro/emacs-promise
+;; - aio https://github.com/skeeto/emacs-aio
 
 ;; 2. Mixing custom function and parallel steps
 ;; (defun custom-async-step (data callback)
@@ -121,8 +134,16 @@
 
 ;; Battlefield example: ehttps://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
 
-;; TODO: make :aggregator to be able to set many of them. (or it is not necessary?)
-;; TODO: add :catch for error handling. (or it is not necessory?)
+;; Note:  (`run-at-time'  after-time  repeat function  &rest  args)  -
+;; frequently used to imulate function with callback.
+
+;;; TODO:
+;; - add :catch for error handling. (or it is not necessory?)
+
+;;; Donate crypto:
+;; BTC (Bitcoin) address: 1CcDWSQ2vgqv5LxZuWaHGW52B9fkT5io25
+;; USDT (Tether) address: TVoXfYMkVYLnQZV3mGZ6GvmumuBfGsZzsN
+
 
 ;;; Code:
 
