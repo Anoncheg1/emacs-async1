@@ -31,17 +31,22 @@
 
 ;;; Commentary:
 
-;; Why? Most commonly you will meet callbacks at url.el library. When
-;; you request page with (`url-retrieve' url callback) command
-;; immediately return control, page will be passed to callback
-;; function at parameters, so chain of calls created, this chain
-;; called "callback hell" problem.
+;; Why? Most commonly, you will encounter callbacks in the url.el library.
+;; When you request a page with the (url-retrieve url callback) command,
+;; control returns immediately. Once the page is retrieved, it is passed
+;; as parameters to the callback function. This creates a chain of calls,
+;; which is known as the "callback hell" problem - nested indented bloks.
+;;
+;;; Other Emacs packages with solution for "callback hell":
+;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master
+;; - promise https://github.com/chuntaro/emacs-promise
+;; - aio https://github.com/skeeto/emacs-aio
 
 ;; Configuration:
 ;; (require 'async1)
 
 ;; Usage:
-;; You define and run pipeline of callbacks with `async1-start' function.
+;; Define and run pipeline of callbacks with `async1-start' function.
 
 ;; Examples 1. Sequential and parallel steps with default template
 ;; (async1-start nil
@@ -67,11 +72,6 @@
 ;; :aggregator may be anywhere in parallel list
 
 ;; Deep trees should work also.
-
-;;; Other Emacs packages with solution for "callback hell":
-;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master
-;; - promise https://github.com/chuntaro/emacs-promise
-;; - aio https://github.com/skeeto/emacs-aio
 
 ;; 2. Mixing custom function and parallel steps
 ;; (defun custom-async-step (data callback)

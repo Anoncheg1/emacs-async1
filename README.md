@@ -2,6 +2,12 @@
 
 **async1** is an Emacs Lisp package for building pipelines of asynchronous functions, supporting both sequential and parallel execution patterns. It provides a simple interface to compose async chains of callbacks, with customizable result aggregation for parallel steps.
 
+Other Emacs packages with solution for "callback hell":
+- deferred https://github.com/kiwanami/emacs-deferred/tree/master
+- promise https://github.com/chuntaro/emacs-promise
+- aio https://github.com/skeeto/emacs-aio
+
+
 ## Usage
 **1. Sequential and parallel steps**
 ```elisp
@@ -150,12 +156,6 @@ Battlefield example: https://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
 
 ## License
 GNU Affero General Public License, version 3 (AGPLv3)
-
-## Other Emacs packages with solution for "callback hell":
-- deferred https://github.com/kiwanami/emacs-deferred/tree/master
-- promise https://github.com/chuntaro/emacs-promise
-- aio https://github.com/skeeto/emacs-aio
-
 
 ## Donate
 You can give me crypto money directly with crypto currencies:
