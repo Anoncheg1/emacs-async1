@@ -7,8 +7,25 @@ Other Emacs packages with solution for "callback hell":
 - promise https://github.com/chuntaro/emacs-promise
 - aio https://github.com/skeeto/emacs-aio
 
+## Why?
 
-## Usage
+Here's a small example of "callback hell" in Emacs Lisp with nested `url-retrieve` calls:
+```elisp
+(url-retrieve "http://example.com/1"
+  (lambda (status1)
+    ;; do something with first response...
+    (url-retrieve "http://example.com/2"
+      (lambda (status2)
+        ;; do something with second response...
+        (url-retrieve "http://example.com/3"
+          (lambda (status3)
+            ;; do something with third response...
+            (message "Done!")))))))
+```
+
+This is useful for Prompt-engineering and AI Agents building:  when you work with ChatGPT or Gimini or other cloud LLM you need several remote requests.
+
+## What?
 **1. Sequential and parallel steps**
 ```elisp
 (async1-start nil
