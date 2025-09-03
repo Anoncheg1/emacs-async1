@@ -174,7 +174,7 @@ Battlefield example: https://github.com/Anoncheg1/oai/blob/main/oai-prompt.el
 ## License
 GNU Affero General Public License, version 3 (AGPLv3)
 
-## Donate
+## Donate, sponsor author
 You can give me crypto money directly with crypto currencies:
 - BTC (Bitcoin) address: 1CcDWSQ2vgqv5LxZuWaHGW52B9fkT5io25
 - USDT (Tether) address: TVoXfYMkVYLnQZV3mGZ6GvmumuBfGsZzsN

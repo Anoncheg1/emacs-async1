@@ -140,7 +140,7 @@
 ;;; TODO:
 ;; - add :catch for error handling. (or it is not necessory?)
 
-;;; Donate crypto:
+;;; Donate crypto, sponsor author:
 ;; BTC (Bitcoin) address: 1CcDWSQ2vgqv5LxZuWaHGW52B9fkT5io25
 ;; USDT (Tether) address: TVoXfYMkVYLnQZV3mGZ6GvmumuBfGsZzsN
 
