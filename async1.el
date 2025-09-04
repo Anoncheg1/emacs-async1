@@ -3,7 +3,7 @@
 ;; Copyright (c) 2025 github.com/Anoncheg1,codeberg.org/Anoncheg
 ;; SPDX-License-Identifier: AGPL-3.0-or-later
 ;; Author: <github.com/Anoncheg1,codeberg.org/Anoncheg>
-;; Keywords: tools, async, callback
+;; Keywords: tools, async, callback, lisp, extensions
 ;; URL: https://github.com/Anoncheg1/emacs-async1
 ;; Version: 0.1
 ;; Created: 25 Aug 2010
@@ -37,10 +37,12 @@
 ;; as parameters to the callback function. This creates a chain of calls,
 ;; which is known as the "callback hell" problem - nested indented bloks.
 ;;
-;;; Other Emacs packages with solution for "callback hell":
+;; Other Emacs packages with solution for "callback hell":
 ;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master
 ;; - promise https://github.com/chuntaro/emacs-promise
 ;; - aio https://github.com/skeeto/emacs-aio
+
+;; What? Static chain of callbacks that unroll at call.
 
 ;; Configuration:
 ;; (require 'async1)
