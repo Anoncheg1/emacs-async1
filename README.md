@@ -23,7 +23,7 @@ Here's a small example of "callback hell" in Emacs Lisp with nested `url-retriev
             (message "Done!")))))))
 ```
 
-When you work remote LLM or AI Agent you may beed to build chain of request for prompt-engineering.
+Remote LLMs or AI Agents may require chains of request for prompt-engineering.
 
 ## What?
 **1. Sequential and parallel steps**
