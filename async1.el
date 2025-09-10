@@ -37,9 +37,9 @@
 ;;  as parameters to the callback function. This creates a chain of calls,
 ;;  which is known as the "callback hell" problem - nested indented bloks.
 ;;
-;; Async   functions  don't   return   and   callbacks  don't   return
-;;  "futures/promises".  Instead, together  they build  chain of  calls
-;;  that executed according to pipeline, asynchronous.
+;; Async functions don't return "futures/promises".  Instead, together
+;;  they build chain of calls that executed according to pipeline,
+;;  asynchronous.
 ;;
 ;; Other Emacs packages with solution for "callback hell":
 ;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master

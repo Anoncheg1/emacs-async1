@@ -2,7 +2,7 @@
 
 **async1** is an Emacs Lisp package for building static pipelines of asynchronous functions, supporting both sequential and parallel execution patterns. It provides a simple interface to compose async chains of callbacks, with customizable result aggregation for parallel steps.
 
-Async functions don't return and callbacks don't return "futures/promises". Instead,  together they build chain of calls that executed according to pipeline, asynchronous.
+Async callbacks don't return "futures/promises". Instead, together they build chain of calls that executed according to pipeline, asynchronous.
 
 Other Emacs packages with solution for "callback hell":
 - deferred https://github.com/kiwanami/emacs-deferred
