@@ -33,9 +33,13 @@
 
 ;; Why? Most commonly, you will encounter callbacks in the url.el library.
 ;; When you request a page with the (url-retrieve url callback) command,
-;; control returns immediately. Once the page is retrieved, it is passed
-;; as parameters to the callback function. This creates a chain of calls,
-;; which is known as the "callback hell" problem - nested indented bloks.
+;;  control returns immediately. Once the page is retrieved, it is passed
+;;  as parameters to the callback function. This creates a chain of calls,
+;;  which is known as the "callback hell" problem - nested indented bloks.
+;;
+;; Async   functions  don't   return   and   callbacks  don't   return
+;;  "futures/promises".  Instead, together  they build  chain of  calls
+;;  that executed according to pipeline, asynchronous.
 ;;
 ;; Other Emacs packages with solution for "callback hell":
 ;; - deferred https://github.com/kiwanami/emacs-deferred/tree/master
@@ -45,10 +49,10 @@
 ;; What? Static chain of callbacks that unroll at call.
 
 ;; Configuration:
-;; (require 'async1)
+;;  (require 'async1)
 
 ;; Usage:
-;; Define and run pipeline of callbacks with `async1-start' function.
+;;  Define and run pipeline of callbacks with `async1-start' function.
 
 ;; Examples 1. Sequential and parallel steps with default template
 ;; (async1-start nil
@@ -69,7 +73,7 @@
 
 ;; You may call own function defined with (data callback) parameters.
 ;; You   may   redefine    `async-default-aggregator'   for   parallel
-;; calls.  There may be only one aggregator for now.
+;;  calls.  There may be only one aggregator for now.
 ;; :parallel should be at the beginin of list
 ;; :aggregator may be anywhere in parallel list
 
