@@ -200,19 +200,20 @@ Used for :aggregator."
         (delq key new-plist))
     plist))
 
-(defun async1-plist-get (plist key)
+(defun async1-plist-get (plist key &optional default)
   "Get value by KEY from PLIST.
-`plist-get' don't work if list have  one missed values or keys, it don't
-resplect :keywords, only order or key-value.
+If KEY is not found, return DEFAULT.
+`plist-get' doesn't work if list has missing values or keys; it doesn't
+respect :keywords, only order of key-value.
 Used for :aggregator."
   (if (memq key plist)
       (let ((value (cadr (memq key plist))))
-        (if (eql (car value) 'function)
+        (if (and (listp value) (eql (car value) 'function))
             (cadr value)  ;; Extract symbol from function
           ;; else
           value))
-    ;; else
-    nil))
+    ;; KEY not found: return default
+    default))
 
 (defun async1--handle-parallel-step (specs data chain-step current-index)
   "Execute parallel SPECS with DATA, aggregate results with AGGREGATOR.
