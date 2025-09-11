@@ -113,36 +113,36 @@ Return collected `test-results' and set global variable to nil."
 (ert-deftest oai-async1-plist-get-extra-tests ()
   ;; 1. Key present, value is a list of the form (function SYMBOL)
   (should
-   (eql (oai-async1-plist-get '(:foo (function bar)) :foo)
+   (eql (async1-plist-get '(:foo (function bar)) :foo)
         'bar))
 
   ;; 2. Key present, value is nil
   (should
-   (eq (oai-async1-plist-get '(:foo nil :bar 1) :foo) nil))
+   (eq (async1-plist-get '(:foo nil :bar 1) :foo) nil))
 
   ;; 3. Key present, value is number
   (should
-   (= (oai-async1-plist-get '(:foo 42 :bar 1) :foo) 42))
+   (= (async1-plist-get '(:foo 42 :bar 1) :foo) 42))
 
   ;; 4. Key present, value missing (key as last element)
   (should
-    (eq (oai-async1-plist-get '(:foo 1 :bar) :bar) nil))
+    (eq (async1-plist-get '(:foo 1 :bar) :bar) nil))
 
   ;; 4b. Key present, value missing (key alone)
   (should
-    (eq (oai-async1-plist-get '(:foo) :foo) nil))
+    (eq (async1-plist-get '(:foo) :foo) nil))
 
   ;; 5. Key duplicate (should return first)
   (should
-   (= (oai-async1-plist-get '(:foo 42 :foo 99) :foo) 42))
+   (= (async1-plist-get '(:foo 42 :foo 99) :foo) 42))
 
   ;; 6. Key present, value is arbitrary list that is not function
   (should
-   (equal (oai-async1-plist-get '(:foo (bar baz)) :foo) '(bar baz)))
+   (equal (async1-plist-get '(:foo (bar baz)) :foo) '(bar baz)))
 
   ;; 7. Key absent, default specified
   (should
-   (= (oai-async1-plist-get '(:foo 123) :bar 777) 777)))
+   (= (async1-plist-get '(:foo 123) :bar 777) 777)))
 
 (ert-deftest test-async-default-template-basic ()
   "Test `async-default-template' with basic input."
