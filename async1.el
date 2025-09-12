@@ -31,6 +31,9 @@
 
 ;;; Commentary:
 
+;; Short: it unroll  "callback hell" to static  sequence, also provide
+;; better handling for plist.
+
 ;; Why? Most commonly, you will encounter callbacks in the url.el library.
 ;; When you request a page with the (url-retrieve url callback) command,
 ;;  control returns immediately. Once the page is retrieved, it is passed
@@ -191,6 +194,7 @@ SPEC is either a function that accepts (data, callback), a plist with
       (lambda (data callback)
         (async1-default-template data callback delay result))))))
 
+;;;###autoload
 (defun async1-plist-remove (plist key)
   "Remove KEY and its value from PLIST, returning a new plist.
 Used for :aggregator."
@@ -200,6 +204,7 @@ Used for :aggregator."
         (delq key new-plist))
     plist))
 
+;;;###autoload
 (defun async1-plist-get (plist key &optional default)
   "Get value by KEY from PLIST.
 If KEY is not found, return DEFAULT.
