@@ -82,7 +82,7 @@ Define and run an async pipeline with `async1-start`. Each step must be a record
 2.  Install via `M-x package-install RET async1 RET`
 
 ### With `use-package`
-If your package is available on MELPA, add this to your init file:
+Add this to your init file:
 
 ```elisp
 (use-package async1

@@ -142,7 +142,18 @@ Return collected `test-results' and set global variable to nil."
 
   ;; 7. Key absent, default specified
   (should
-   (= (async1-plist-get '(:foo 123) :bar 777) 777)))
+   (= (async1-plist-get '(:foo 123) :bar 777) 777))
+
+  ;; 8.1. Value is nil
+  (should
+   (equal (async1-plist-get '(:foo 1 :bar nil :zaza nil) :zaza)  nil))
+  ;; 8.2. Value is nil
+  (should
+   (equal (async1-plist-get '(:foo 1 :bar nil :zaza) :zaza) nil))
+  ;; 8.3. Value is nil
+  (should
+   (equal (async1-plist-get '(:zaza :foo 1 :bar nil) :zaza) nil))
+  )
 
 (ert-deftest test-async-default-template-basic ()
   "Test `async-default-template' with basic input."
