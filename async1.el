@@ -205,22 +205,6 @@ Used for :aggregator."
     plist))
 
 ;;;###autoload
-;; (defun async1-plist-get (plist key &optional default)
-;;   "Get value by KEY from PLIST.
-;; If KEY is not found, return DEFAULT.
-;; `plist-get' doesn't work if list has missing values or keys; it doesn't
-;; respect :keywords, only order of key-value.
-;; Used for :aggregator."
-;;   (if (memq key plist)
-;;       (let ((value (cadr (memq key plist))))
-;;         (if (and (listp value) (eql (car value) 'function))
-;;             (cadr value)  ;; Extract symbol from function
-;;           ;; else
-;;           value))
-;;     ;; KEY not found: return default
-;;     default))
-
-;;;###autoload
 (defun async1-plist-get (plist key &optional default)
   "Get value by KEY from PLIST.
 If KEY is not found, return DEFAULT.
